@@ -1,0 +1,18 @@
+package com.smartcity.orchestrator.controllers;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/smartcity")
+public class OrchController {
+
+    public OrchController() {
+    }
+
+    @GetMapping
+    public String test() {
+        return "Smart City Orchestrator is running.";
+    }
+}
