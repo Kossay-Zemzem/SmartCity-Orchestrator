@@ -12,8 +12,8 @@ import java.util.List;
 public class TransportRESTClient {
 
     private final RestClient restClient;
-//    private final static String BASE_URL = "http://localhost:8081/transport"; //calls the service directly
-    private final static String BASE_URL = "http://localhost:9000/transport"; //calls microservice names transport via gateway on port 9000
+//    private final static String BASE_URL = "http://localhost:8081"; //calls the service directly (hardcoded port)
+    private final static String BASE_URL = "http://localhost:9000/transport"; //calls microservice via API Gateway (service names "transport")
 
     public TransportRESTClient(){
         this.restClient = RestClient.builder()
@@ -23,7 +23,7 @@ public class TransportRESTClient {
 
 
     public List<TerminusDTO> getAllTerminus() {
-        //call GET http://localhost:8081/transport/terminus
+        //call GET /terminus of the Transport microservice
         return restClient.get()
                 .uri("/terminus")
                 .retrieve()
