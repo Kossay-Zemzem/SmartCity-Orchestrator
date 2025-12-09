@@ -10,7 +10,7 @@ import org.springframework.web.client.RestClient;
 public class ParkingGraphQLClient {
 
     private final HttpSyncGraphQlClient graphQlClient;
-    private final static String BASE_URL = "http://localhost:8083/graphql"; //calls statically to graphql endpoint of parking microservice
+    private final static String BASE_URL = "http://localhost:9000/parking/graphql"; //calls statically to graphql endpoint of parking microservice
 
     public ParkingGraphQLClient() {
         RestClient restClient = RestClient.builder()
