@@ -9,6 +9,8 @@ import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
 import com.smartcity.orchestrator.utility.SoapFactureMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/smartcity")
 public class OrchController {
+    private static final Logger LG = LogManager.getLogger();
+
     private final TransportRESTClient transportClient ;
     private final ParkingGraphQLClient parkingClient ;
     private final FactureSOAPClient factureClient ;
@@ -36,7 +40,7 @@ public class OrchController {
 
         //1.Appeler GraphQL parking pour reserver (ParkingGraphQLClient)
         FactureParking facture= parkingClient.reserveSpot(reservation);
-        System.out.println("Facture Parking received in Orchestrator: "+facture.getRefFacture());
+        LG.info("Facture Parking received in Orchestrator: {}", facture.getRefFacture());
 
         //2. Recevoir objet FactureParking et le transformer en FactureRequest pour appel SOAP
         FactureRequest factureRequest = soapFactureMapper.mapToFactureRequest(facture);
@@ -54,7 +58,7 @@ public class OrchController {
     @GetMapping("/terminus")
     public List<TerminusDTO> getAllTerminus() {
         List<TerminusDTO> terminusList = transportClient.getAllTerminus();
-        System.out.println("Terminus List from Transport Service: " + terminusList.get(0).getNom());
+        LG.info("Terminus List from Transport Service: {}", terminusList.get(0).getNom());
         return terminusList ;
     }
 
