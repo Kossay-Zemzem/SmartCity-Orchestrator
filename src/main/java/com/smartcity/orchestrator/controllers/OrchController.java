@@ -3,6 +3,7 @@ package com.smartcity.orchestrator.controllers;
 import com.smartcity.orchestrator.DTOs.FactureParking;
 import com.smartcity.orchestrator.DTOs.ReservationParking;
 import com.smartcity.orchestrator.DTOs.TerminusDTO;
+import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ import java.util.List;
 public class OrchController {
     private final TransportRESTClient transportClient ;
     private final ParkingGraphQLClient parkingClient ;
+    private final FactureSOAPClient factureClient ;
 
     @Autowired
-    public OrchController(TransportRESTClient transportClient, ParkingGraphQLClient parkingClient) {
+    public OrchController(TransportRESTClient transportClient, ParkingGraphQLClient parkingClient, FactureSOAPClient factureClient) {
         this.transportClient = transportClient;
         this.parkingClient = parkingClient;
+        this.factureClient = factureClient;
     }
 
     @GetMapping
@@ -59,5 +62,9 @@ public class OrchController {
     }
 
     //Facture microservice calls
+    @GetMapping("/facture/clients/count")
+    public Long countClients() {
+        return factureClient.countClients();
+    }
 
 }
