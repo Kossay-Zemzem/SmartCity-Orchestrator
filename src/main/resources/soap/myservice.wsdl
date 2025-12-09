@@ -1,0 +1,206 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.facture.smartcity.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://services.facture.smartcity.com/" name="ServiceFactureAPI">
+    <types>
+        <xs:schema xmlns:tns="http://services.facture.smartcity.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services.facture.smartcity.com/">
+            <xs:element name="client" type="tns:client"/>
+            <xs:element name="factureDTO" type="tns:factureDTO"/>
+            <xs:element name="factureParking" type="tns:factureParking"/>
+            <xs:element name="factureRequest" type="tns:factureRequest"/>
+            <xs:element name="generateFacture" type="tns:generateFacture"/>
+            <xs:element name="generateFactureResponse" type="tns:generateFactureResponse"/>
+            <xs:element name="getAllClients" type="tns:getAllClients"/>
+            <xs:element name="getAllClientsResponse" type="tns:getAllClientsResponse"/>
+            <xs:element name="getAllFactureParType" type="tns:getAllFactureParType"/>
+            <xs:element name="getAllFactureParTypeResponse" type="tns:getAllFactureParTypeResponse"/>
+            <xs:element name="getClientCount" type="tns:getClientCount"/>
+            <xs:element name="getClientCountResponse" type="tns:getClientCountResponse"/>
+            <xs:complexType name="getAllClients">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getAllClientsResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:client" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="client">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int" minOccurs="0"/>
+                    <xs:element name="refClient" type="xs:string" minOccurs="0"/>
+                    <xs:element name="nom" type="xs:string" minOccurs="0"/>
+                    <xs:element name="isBusiness" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getClientCount">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getClientCountResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getAllFactureParType">
+                <xs:sequence>
+                    <xs:element name="type" type="tns:TypeFacture" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getAllFactureParTypeResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:factureDTO" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="factureDTO">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int" minOccurs="0"/>
+                    <xs:element name="refFacture" type="xs:string" minOccurs="0"/>
+                    <xs:element name="type" type="tns:TypeFacture" minOccurs="0"/>
+                    <xs:element name="montantHT" type="xs:double" minOccurs="0"/>
+                    <xs:element name="montantTTC" type="xs:double" minOccurs="0"/>
+                    <xs:element name="dateEmission" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="dateLimitePaiement" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="prixUnitaire" type="xs:double" minOccurs="0"/>
+                    <xs:element name="consomationTotal" type="xs:int" minOccurs="0"/>
+                    <xs:element name="prixServiceSuppl" type="xs:double" minOccurs="0"/>
+                    <xs:element name="clientRef" type="xs:string" minOccurs="0"/>
+                    <xs:element name="clientNom" type="xs:string" minOccurs="0"/>
+                    <xs:element name="codeSpot" type="xs:string" minOccurs="0"/>
+                    <xs:element name="typeSpot" type="tns:parkingSpotType" minOccurs="0"/>
+                    <xs:element name="isOccupied" type="xs:boolean"/>
+                    <xs:element name="etageLabel" type="xs:string" minOccurs="0"/>
+                    <xs:element name="durationInHours" type="xs:int" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="generateFacture">
+                <xs:sequence>
+                    <xs:element name="factureRequest" type="tns:factureRequest" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="factureRequest">
+                <xs:sequence>
+                    <xs:element name="refFacture" type="xs:string" minOccurs="0"/>
+                    <xs:element name="refClient" type="xs:string" minOccurs="0"/>
+                    <xs:element name="codeSpot" type="xs:string" minOccurs="0"/>
+                    <xs:element name="typeSpot" type="xs:string" minOccurs="0"/>
+                    <xs:element name="isOccupied" type="xs:boolean"/>
+                    <xs:element name="etageLabel" type="xs:string" minOccurs="0"/>
+                    <xs:element name="durationInHours" type="xs:int" minOccurs="0"/>
+                    <xs:element name="prixTTC" type="xs:double" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="generateFactureResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:factureParking" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="factureParking">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int" minOccurs="0"/>
+                    <xs:element name="refFacture" type="xs:string" minOccurs="0"/>
+                    <xs:element name="codeSpot" type="xs:string" minOccurs="0"/>
+                    <xs:element name="typeSpot" type="tns:parkingSpotType" minOccurs="0"/>
+                    <xs:element name="isOccupied" type="xs:boolean"/>
+                    <xs:element name="etageLabel" type="xs:string" minOccurs="0"/>
+                    <xs:element name="durationInHours" type="xs:int" minOccurs="0"/>
+                    <xs:element name="prixTTC" type="xs:double" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="TypeFacture">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ELECT"/>
+                    <xs:enumeration value="EAU"/>
+                    <xs:enumeration value="PARKING"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="parkingSpotType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NORMAL"/>
+                    <xs:enumeration value="VIP"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </types>
+    <message name="getClientCount">
+        <part name="parameters" element="tns:getClientCount"/>
+    </message>
+    <message name="getClientCountResponse">
+        <part name="parameters" element="tns:getClientCountResponse"/>
+    </message>
+    <message name="getAllClients">
+        <part name="parameters" element="tns:getAllClients"/>
+    </message>
+    <message name="getAllClientsResponse">
+        <part name="parameters" element="tns:getAllClientsResponse"/>
+    </message>
+    <message name="generateFacture">
+        <part name="parameters" element="tns:generateFacture"/>
+    </message>
+    <message name="generateFactureResponse">
+        <part name="parameters" element="tns:generateFactureResponse"/>
+    </message>
+    <message name="getAllFactureParType">
+        <part name="parameters" element="tns:getAllFactureParType"/>
+    </message>
+    <message name="getAllFactureParTypeResponse">
+        <part name="parameters" element="tns:getAllFactureParTypeResponse"/>
+    </message>
+    <portType name="ServiceFactureAPI">
+        <operation name="getClientCount">
+            <input wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getClientCountRequest" message="tns:getClientCount"/>
+            <output wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getClientCountResponse" message="tns:getClientCountResponse"/>
+        </operation>
+        <operation name="getAllClients">
+            <input wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getAllClientsRequest" message="tns:getAllClients"/>
+            <output wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getAllClientsResponse" message="tns:getAllClientsResponse"/>
+        </operation>
+        <operation name="generateFacture">
+            <input wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/generateFactureRequest" message="tns:generateFacture"/>
+            <output wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/generateFactureResponse" message="tns:generateFactureResponse"/>
+        </operation>
+        <operation name="getAllFactureParType">
+            <input wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getAllFactureParTypeRequest" message="tns:getAllFactureParType"/>
+            <output wsam:Action="http://services.facture.smartcity.com/ServiceFactureAPI/getAllFactureParTypeResponse" message="tns:getAllFactureParTypeResponse"/>
+        </operation>
+    </portType>
+    <binding name="ServiceFactureAPIPortBinding" type="tns:ServiceFactureAPI">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getClientCount">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getAllClients">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="generateFacture">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getAllFactureParType">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ServiceFactureAPI">
+        <port name="ServiceFactureAPIPort" binding="tns:ServiceFactureAPIPortBinding">
+            <soap:address location="http://localhost:8082/services/API"/>
+        </port>
+    </service>
+</definitions>
