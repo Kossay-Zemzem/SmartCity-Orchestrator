@@ -11,9 +11,9 @@ public class FactureSOAPClient {
     ServiceFactureAPI_Service service = new ServiceFactureAPI_Service();
     ServiceFactureAPI stub = service.getServiceFactureAPIPort();
 
-//    public FactureParking generateFacture(FactureRequest request) {
-//        return stub.generateFacture(request);
-//    }
+    public FactureParking generateFacture(FactureRequest request) {
+        return stub.generateFacture(request);
+    }
 
     public Long countClients(){
         return stub.getClientCount();

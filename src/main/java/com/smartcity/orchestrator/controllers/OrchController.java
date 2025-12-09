@@ -1,12 +1,14 @@
 package com.smartcity.orchestrator.controllers;
 
 import com.example.proxy.FactureDTO;
+import com.example.proxy.FactureRequest;
 import com.smartcity.orchestrator.DTOs.FactureParking;
 import com.smartcity.orchestrator.DTOs.ReservationParking;
 import com.smartcity.orchestrator.DTOs.TerminusDTO;
 import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
+import com.smartcity.orchestrator.utility.SoapFactureMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +20,14 @@ public class OrchController {
     private final TransportRESTClient transportClient ;
     private final ParkingGraphQLClient parkingClient ;
     private final FactureSOAPClient factureClient ;
+    private final SoapFactureMapper soapFactureMapper;
 
     @Autowired
-    public OrchController(TransportRESTClient transportClient, ParkingGraphQLClient parkingClient, FactureSOAPClient factureClient) {
+    public OrchController(TransportRESTClient transportClient, ParkingGraphQLClient parkingClient, FactureSOAPClient factureClient, SoapFactureMapper soapFactureMapper) {
         this.transportClient = transportClient;
         this.parkingClient = parkingClient;
         this.factureClient = factureClient;
+        this.soapFactureMapper = soapFactureMapper;
     }
 
     @GetMapping
@@ -38,14 +42,16 @@ public class OrchController {
         reservation.setSpotCode("A14");
         reservation.setEtageLabel("F0");
         reservation.setDurationInHours(2);
-        reservation.setRefClient("CLIENT-12345");
+        reservation.setRefClient("CLT-2024-001");
         //1.Appeler GraphQL parking pour reserver (ParkingGraphQLClient)
         FactureParking fp= parkingClient.reserveSpot(reservation);
         System.out.println("Facture Parking received in Orchestrator: "+fp.getRefFacture());
         //2. Recevoir et creer objet FactureParking
+        FactureRequest factureRequest = soapFactureMapper.mapToFactureRequest(fp);
+        factureClient.generateFacture(factureRequest);
         //3. Appeler service SOAP opur genererFacture avec objet "FactureParking" comme "FactureRequest"
         //4. Recevoir la reponse SOAP et retourner FactureParking ou reponse SOAP mappe en FactureParking
-        return null; //placeholder
+        return fp;
     }
 
 
