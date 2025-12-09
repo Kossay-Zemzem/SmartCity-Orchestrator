@@ -4,6 +4,7 @@ import com.example.proxy.FactureRequest;
 import com.smartcity.orchestrator.DTOs.FactureParking;
 import org.springframework.stereotype.Component;
 
+//Helper class to map FactureParking to generated class FactureRequest
 @Component
 public class SoapFactureMapper {
     public FactureRequest mapToFactureRequest(FactureParking fp) {
