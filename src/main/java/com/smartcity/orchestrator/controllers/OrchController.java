@@ -1,5 +1,6 @@
 package com.smartcity.orchestrator.controllers;
 
+import com.example.proxy.FactureDTO;
 import com.smartcity.orchestrator.DTOs.FactureParking;
 import com.smartcity.orchestrator.DTOs.ReservationParking;
 import com.smartcity.orchestrator.DTOs.TerminusDTO;
@@ -7,10 +8,7 @@ import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -65,6 +63,16 @@ public class OrchController {
     @GetMapping("/facture/clients/count")
     public Long countClients() {
         return factureClient.countClients();
+    }
+
+    @GetMapping("/facture/clients")
+    public Object getAllClients() {
+        return factureClient.getAllClients();
+    }
+
+    @GetMapping("/facture/{type}")
+    public List<FactureDTO> getAllFacturesByType(@PathVariable("type") String type) {
+        return factureClient.getAllFactureParType(type);
     }
 
 }
