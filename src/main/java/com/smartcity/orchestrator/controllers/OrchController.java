@@ -81,6 +81,16 @@ public class OrchController {
         return parkingClient.getSpotByCode(codeSpot,labelEtage);
     }
 
+    @GetMapping("/parking/reservations")
+    public List<ReservationData> getAllReservations() {
+        return parkingClient.getAllReservations();
+    }
+
+    @GetMapping("/parking/reservations/{refClient}")
+    public List<ReservationData> getReservationsByClientRef(@PathVariable("refClient") String refClient) {
+        return parkingClient.getReservationsByRefClient(refClient);
+    }
+
 
     //Transport microservice calls --------------------------------------
     @GetMapping("/transport/terminus")

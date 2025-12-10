@@ -131,52 +131,52 @@ public class ParkingGraphQLClient {
         return result;
     }
 //--
-//
-//    public List<ReservationData> getAllReservations() {
-//        String query = """
-//                    query AllReservations {
-//                        getAllResrervations {
-//                            spotCode
-//                            etageLabel
-//                            durationInHours
-//                            refClient
-//                        }
-//                    }
-//                """;
-//
-//        // The result is a List<ReservationData>
-//        List<ReservationData> result = graphQlClient.document(query)
-//                .retrieve("getAllResrervations")
-//                .toEntityList(ReservationData.class)
-//                .block();
-//        LG.info("Received {} total reservations from Parking Service.", result != null ? result.size() : 0);
-//
-//        return result;
-//    }
-//
-//    public List<ReservationData> getReservationsByRefClient(String refClient) {
-//        String query = """
-//                    query ReservationsByClient($refClient: String!) {
-//                        getReservationsByRefClient(refClient: $refClient) {
-//                            spotCode
-//                            etageLabel
-//                            durationInHours
-//                            refClient
-//                        }
-//                    }
-//                """;
-//
-//        // The result is a List<ReservationData>
-//        List<ReservationData> result = graphQlClient.document(query)
-//                .variable("refClient", refClient) // Bind the input variable
-//                .retrieve("getReservationsByRefClient")
-//                .toEntityList(ReservationData.class)
-//                .block();
-//        LG.info("Received {} reservations for client {} from Parking Service.",
-//                result != null ? result.size() : 0, refClient);
-//
-//        return result;
-//    }
+
+    public List<ReservationData> getAllReservations() {
+        String query = """
+                    query AllReservations {
+                        getAllResrervations {
+                            spotCode
+                            etageLabel
+                            durationInHours
+                            refClient
+                        }
+                    }
+                """;
+
+        // The result is a List<ReservationData>
+        List<ReservationData> result = graphQlClient.document(query)
+                .retrieve("getAllResrervations")
+                .toEntityList(ReservationData.class)
+                .block();
+        LG.info("Received {} total reservations from Parking Service.", result != null ? result.size() : 0);
+
+        return result;
+    }
+
+    public List<ReservationData> getReservationsByRefClient(String refClient) {
+        String query = """
+                    query ReservationsByClient($refClient: String!) {
+                        getReservationsByRefClient(refClient: $refClient) {
+                            spotCode
+                            etageLabel
+                            durationInHours
+                            refClient
+                        }
+                    }
+                """;
+
+        // The result is a List<ReservationData>
+        List<ReservationData> result = graphQlClient.document(query)
+                .variable("refClient", refClient) // Bind the input variable
+                .retrieve("getReservationsByRefClient")
+                .toEntityList(ReservationData.class)
+                .block();
+        LG.info("Received {} reservations for client {} from Parking Service.",
+                result != null ? result.size() : 0, refClient);
+
+        return result;
+    }
 
     public SpotBriefDTO getSpotByCode(String codeSpot, String labelEtage) {
         String query = """
@@ -229,6 +229,4 @@ public class ParkingGraphQLClient {
 
         return result;
     }
-
-
 }
