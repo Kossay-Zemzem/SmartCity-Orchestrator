@@ -59,12 +59,27 @@ public class OrchController {
         return parkingClient.getEmptySpots();
     }
 
-    //brief version of the previous method
+    //brief version of the previous method (Utilize GraphQL Projections to limit data returned to necessary fields only)
     @GetMapping("/parking/spots/empty/brief")
     public List<EtageBriefDTO> getEtagesWithEmptySpotsBrief() {
         return parkingClient.getEmptySpotsBrief();
     }
 
+    @GetMapping("/parking/etages")
+    public List<EtageBriefDTO> getAllEtages() {
+        return parkingClient.getAllEtages();
+    }
+
+    @GetMapping("/parking/etages/{labelEtage}")
+    public EtageDTO getEtageByLabel(@PathVariable("labelEtage") String labelEtage) {
+        return parkingClient.getEtageByLabel(labelEtage);
+    }
+
+    @GetMapping("/parking/etages/{labelEtage}/spots/{codeSpot}")
+    public SpotBriefDTO getSpotByCodeAndEtage(@PathVariable("labelEtage") String labelEtage,
+                                         @PathVariable("codeSpot") String codeSpot) {
+        return parkingClient.getSpotByCode(codeSpot,labelEtage);
+    }
 
 
     //Transport microservice calls --------------------------------------
