@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/smartcity")
@@ -111,21 +112,27 @@ public class OrchController {
         return transportClient.getTrajetsDuLigneDeTransport(codeLigne);
     }
 
-
-
-
     //Facture microservice calls --------------------------------------
-    @GetMapping("/facture/clients/count")
+    @GetMapping("/factures/clients/count")
     public Long countClients() {
         return factureClient.countClients();
     }
 
-    @GetMapping("/facture/clients")
+    @GetMapping("/factures/clients")
     public Object getAllClients() {
         return factureClient.getAllClients();
     }
 
-    @GetMapping("/facture/{type}")
+    //Methode pour retourner les types de factures supportés
+    @GetMapping("/factures/types")
+    public Map<String, Object> getFacturesByTypeQueryParam() {
+        return java.util.Map.of(
+                "supportedTypes", List.of(TypeFacture.EAU.name(), TypeFacture.ELECT.name(), TypeFacture.PARKING.name())
+        );
+    }
+
+    @GetMapping("/factures/{type}")
+    //Types possible: ELECTRIQUE, EAU, PARKING
     public List<FactureDTO> getAllFacturesByType(@PathVariable("type") String type) {
         return factureClient.getAllFactureParType(type);
     }
