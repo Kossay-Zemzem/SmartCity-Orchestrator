@@ -34,6 +34,8 @@ public class OrchController {
         this.soapFactureMapper = soapFactureMapper;
     }
 
+    //Mixed microservice calls --------------------------------------
+
     //Scenario de Reservation d'un spot de parking par l'appelle POST /parking/reservation
     @PostMapping("/parking/reservation")
     public FactureParking reserverSpotParking(@RequestBody ReservationParking reservation) {
@@ -52,17 +54,25 @@ public class OrchController {
         return facture;
     }
 
-    //Parking microservice calls
+    //Parking microservice calls --------------------------------------
 
-    //Transport microservice calls
-    @GetMapping("/terminus")
+    //Transport microservice calls --------------------------------------
+    @GetMapping("/transport/terminus")
     public List<TerminusDTO> getAllTerminus() {
         List<TerminusDTO> terminusList = transportClient.getAllTerminus();
         LG.info("Terminus List from Transport Service: {}", terminusList.get(0).getNom());
         return terminusList ;
     }
 
-    //Facture microservice calls
+//    @GetMapping("/transport/lignes")
+//    public Object getAllLignesDeTransport() {
+//        return transportClient.getAllLignesDeTransport();
+//    }
+
+
+
+
+    //Facture microservice calls --------------------------------------
     @GetMapping("/facture/clients/count")
     public Long countClients() {
         return factureClient.countClients();
