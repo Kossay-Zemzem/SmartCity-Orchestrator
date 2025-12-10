@@ -7,6 +7,7 @@ import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
 import com.smartcity.orchestrator.utility.SoapFactureMapper;
+import jakarta.ws.rs.QueryParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,18 @@ public class OrchController {
     }
 
     //Parking microservice calls --------------------------------------
+    @GetMapping("/parking/spots/empty")
+    public List<EtageDTO> getEtagesWithEmptySpots() {
+        return parkingClient.getEmptySpots();
+    }
+
+    //brief version of the previous method
+    @GetMapping("/parking/spots/empty/brief")
+    public List<EtageBriefDTO> getEtagesWithEmptySpotsBrief() {
+        return parkingClient.getEmptySpotsBrief();
+    }
+
+
 
     //Transport microservice calls --------------------------------------
     @GetMapping("/transport/terminus")
