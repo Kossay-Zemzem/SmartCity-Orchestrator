@@ -1,7 +1,6 @@
 package com.smartcity.orchestrator.clients;
 
 import com.example.proxy.*; // Generated classes from WSDL
-//import com.smartcity.proxy.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 @Service
 public class FactureSOAPClient {
     ServiceFactureAPI_Service service = new ServiceFactureAPI_Service();
-    ServiceFactureAPI stub = service.getServiceFactureAPIPort();
+    ServiceFactureAPI stub = service.getServiceFactureAPIPort(); //obtenir le stub pour faire des appels SOAP
 
     public FactureParking generateFacture(FactureRequest request) {
         return stub.generateFacture(request);

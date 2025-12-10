@@ -2,13 +2,15 @@ package com.smartcity.orchestrator.clients;
 
 import com.smartcity.orchestrator.DTOs.FactureParking;
 import com.smartcity.orchestrator.DTOs.ReservationParking;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.graphql.client.HttpSyncGraphQlClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
 public class ParkingGraphQLClient {
-
+    private static final Logger LG = LogManager.getLogger();
     private final HttpSyncGraphQlClient graphQlClient;
     private final static String BASE_URL = "http://localhost:8083/graphql"; //calls statically to graphql endpoint of parking microservice
 
@@ -49,7 +51,7 @@ public class ParkingGraphQLClient {
                 .toEntity(FactureParking.class)
                 // 6. Execute synchronously and get the result (since it's HttpSyncGraphQlClient)
                 .block();
-        System.out.println("Received FactureParking from Parking Service: " + result);
+        LG.info("Received FactureParking from Parking Service: {}", result);
 
         return result;
     }

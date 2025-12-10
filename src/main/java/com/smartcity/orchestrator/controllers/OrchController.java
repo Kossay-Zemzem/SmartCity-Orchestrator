@@ -9,6 +9,8 @@ import com.smartcity.orchestrator.clients.FactureSOAPClient;
 import com.smartcity.orchestrator.clients.ParkingGraphQLClient;
 import com.smartcity.orchestrator.clients.TransportRESTClient;
 import com.smartcity.orchestrator.utility.SoapFactureMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/smartcity")
 public class OrchController {
+    private static final Logger LG = LogManager.getLogger();
+
     private final TransportRESTClient transportClient ;
     private final ParkingGraphQLClient parkingClient ;
     private final FactureSOAPClient factureClient ;
@@ -30,30 +34,23 @@ public class OrchController {
         this.soapFactureMapper = soapFactureMapper;
     }
 
-    @GetMapping
-    public String test() {
-        return "Smart City Orchestrator is running.";
-    }
-    //Scenario N°1 Reservation d'un spot de parking
+    //Scenario de Reservation d'un spot de parking par l'appelle POST /parking/reservation
     @PostMapping("/parking/reservation")
-    public FactureParking reserverSpotParking() {
-        //0. Creer objet ReservationParking (get it from POST request body later)
-        ReservationParking reservation = new ReservationParking();
-        reservation.setSpotCode("A14");
-        reservation.setEtageLabel("F0");
-        reservation.setDurationInHours(2);
-        reservation.setRefClient("CLT-2024-001");
-        //1.Appeler GraphQL parking pour reserver (ParkingGraphQLClient)
-        FactureParking fp= parkingClient.reserveSpot(reservation);
-        System.out.println("Facture Parking received in Orchestrator: "+fp.getRefFacture());
-        //2. Recevoir et creer objet FactureParking
-        FactureRequest factureRequest = soapFactureMapper.mapToFactureRequest(fp);
-        factureClient.generateFacture(factureRequest);
-        //3. Appeler service SOAP opur genererFacture avec objet "FactureParking" comme "FactureRequest"
-        //4. Recevoir la reponse SOAP et retourner FactureParking ou reponse SOAP mappe en FactureParking
-        return fp;
-    }
+    public FactureParking reserverSpotParking(@RequestBody ReservationParking reservation) {
 
+        //1.Appeler GraphQL parking pour reserver (ParkingGraphQLClient)
+        FactureParking facture= parkingClient.reserveSpot(reservation);
+        LG.info("Facture Parking received in Orchestrator: {}", facture.getRefFacture());
+
+        //2. Recevoir objet FactureParking et le transformer en FactureRequest pour appel SOAP
+        FactureRequest factureRequest = soapFactureMapper.mapToFactureRequest(facture);
+
+        //3. Appeler service SOAP pour enregistrer la facture
+        factureClient.generateFacture(factureRequest);
+
+        //4. Renvoyer la facture
+        return facture;
+    }
 
     //Parking microservice calls
 
@@ -61,7 +58,7 @@ public class OrchController {
     @GetMapping("/terminus")
     public List<TerminusDTO> getAllTerminus() {
         List<TerminusDTO> terminusList = transportClient.getAllTerminus();
-        System.out.println("Terminus List from Transport Service: " + terminusList.get(0).getNom());
+        LG.info("Terminus List from Transport Service: {}", terminusList.get(0).getNom());
         return terminusList ;
     }
 
