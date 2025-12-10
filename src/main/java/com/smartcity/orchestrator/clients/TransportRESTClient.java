@@ -1,5 +1,6 @@
 package com.smartcity.orchestrator.clients;
 
+import com.smartcity.orchestrator.DTOs.LigneDeTransportDTO;
 import com.smartcity.orchestrator.DTOs.TerminusDTO;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -28,5 +29,13 @@ public class TransportRESTClient {
                 .uri("/terminus")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<TerminusDTO>>() {});
+    }
+
+    public List<LigneDeTransportDTO> getAllLignesDeTransport() {
+        //call GET /lignes of the Transport microservice
+        return restClient.get()
+                .uri("/lignes")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<LigneDeTransportDTO>>() {});
     }
 }

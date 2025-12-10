@@ -3,6 +3,7 @@ package com.smartcity.orchestrator.controllers;
 import com.example.proxy.FactureDTO;
 import com.example.proxy.FactureRequest;
 import com.smartcity.orchestrator.DTOs.FactureParking;
+import com.smartcity.orchestrator.DTOs.LigneDeTransportDTO;
 import com.smartcity.orchestrator.DTOs.ReservationParking;
 import com.smartcity.orchestrator.DTOs.TerminusDTO;
 import com.smartcity.orchestrator.clients.FactureSOAPClient;
@@ -64,10 +65,10 @@ public class OrchController {
         return terminusList ;
     }
 
-//    @GetMapping("/transport/lignes")
-//    public Object getAllLignesDeTransport() {
-//        return transportClient.getAllLignesDeTransport();
-//    }
+    @GetMapping("/transport/lignes")
+    public List<LigneDeTransportDTO> getAllLignesDeTransport() {
+        return transportClient.getAllLignesDeTransport();
+    }
 
 
 
