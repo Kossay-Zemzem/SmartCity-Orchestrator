@@ -14,6 +14,4 @@ The Orchestrator Service is a component of the Smart City platform that coordina
 * **Database:** H2
 
 > [!IMPORTANT]
-> The orchestrator intentionally includes generated sources in the `target` folder to facilitate demonstration and testing. **Generated sources are normally not versioned**, but an exception was made here because generating SOAP client stubs correctly can be tricky. These sources include the SOAP client stubs produced from the [Billing Service's WSDL specification](https://github.com/Kossay-Zemzem/Smart-City-Microservices/blob/main/specs/Facture-service.wsdl), which the Orchestrator needs in order to communicate with that service.
->
-> Do not run `mvn clean` on the Orchestrator, as this deletes the `target` folder along with these sources. If you do you will have to regenerate them using the [wsimport command-line tool](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/wsimport.html)
+> In order for the orchestrator to communicate with the Billing service , you need to generate SOAP client stubs from the [service's WSDL specification](https://github.com/Kossay-Zemzem/Smart-City-Microservices/blob/main/specs/Facture-service.wsdl) using [wsimport command-line tool](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/wsimport.html) . However, to facilitate testing, these stubs were pre-generated and included in the demonstration version of this service, [which you can download from here](https://github.com/Kossay-Zemzem/Smart-City-Microservices/tree/main/services/orchestrator).
