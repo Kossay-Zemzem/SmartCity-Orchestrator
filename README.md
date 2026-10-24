@@ -12,6 +12,3 @@ The Orchestrator Service is a component of the Smart City platform that coordina
 * **Framework:** Spring Boot
 * **API Style:** REST
 * **Database:** No database is used
-
-> [!IMPORTANT]
-> In order for the orchestrator to communicate with the Billing service , you need to generate SOAP client stubs from the [service's WSDL specification](https://github.com/Kossay-Zemzem/Smart-City-Microservices/blob/main/specs/Facture-service.wsdl) using [wsimport command-line tool](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/wsimport.html) . However, to facilitate testing, these stubs were pre-generated and included in the demonstration version of this service, [which you can download from here](https://github.com/Kossay-Zemzem/Smart-City-Microservices/tree/main/services/orchestrator).
